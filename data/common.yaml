@@ -1,0 +1,21 @@
+---
+profile_seaweedfs::filer: false
+profile_seaweedfs::ip_address: "%{facts.networking.ip}"
+profile_seaweedfs::master: false
+profile_seaweedfs::volume: false
+profile_seaweedfs::archive_name: 'linux_amd64.tar.gz'
+profile_seaweedfs::filer_ip: "%{facts.networking.ip}"
+profile_seaweedfs::filer_port: 8888
+profile_seaweedfs::filer_replication: '001'
+profile_seaweedfs::master_ip: "%{facts.networking.ip}"
+profile_seaweedfs::master_port: 9333
+profile_seaweedfs::master_replication: '001'
+profile_seaweedfs::master_peers: []
+profile_seaweedfs::mount: false
+profile_seaweedfs::mounts: {}
+profile_seaweedfs::mount_defaults: {}
+profile_seaweedfs::version: '2.17'
+profile_seaweedfs::volume_data_dir: '/srv/seaweedfs'
+profile_seaweedfs::volume_max_volumes: 7
+profile_seaweedfs::volume_port: 8088
+profile_seaweedfs::manage_sd_service: false
