@@ -44,6 +44,10 @@ class profile_seaweedfs (
   }
 
   if $mount {
+    package { 'fuse':
+      ensure => installed,
+    }
+
     create_resources('seaweedfs::mount', $mounts, $mount_defaults)
   }
 }
