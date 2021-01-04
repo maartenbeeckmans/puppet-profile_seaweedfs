@@ -14,7 +14,7 @@ profile_seaweedfs::master_peers: []
 profile_seaweedfs::mount: false
 profile_seaweedfs::mounts: {}
 profile_seaweedfs::mount_defaults: {}
-profile_seaweedfs::version: '2.17'
+profile_seaweedfs::version: '2.19'
 profile_seaweedfs::volume_data_dir: '/srv/seaweedfs'
 profile_seaweedfs::volume_max_volumes: 7
 profile_seaweedfs::volume_port: 8088
