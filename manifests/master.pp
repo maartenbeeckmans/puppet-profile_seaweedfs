@@ -1,16 +1,18 @@
 #
-class profile_seaweedfs::master (
-  String  $master_ip          = $::profile_seaweedfs::master_ip,
-  Integer $master_port        = $::profile_seaweedfs::master_port,
-  String  $master_replication = $::profile_seaweedfs::master_replication,
-  Array   $master_peers       = $::profile_seaweedfs::master_peers,
+define profile_seaweedfs::master (
+  String  $ip_address         = $::profile_seaweedfs::master_ip,
+  Integer $master_port        = 9333,
+  String  $master_replication = '001',
+  Array   $master_peers       = [],
+  Integer $volume_size_limit  = 25600,
   Boolean $manage_sd_service  = $::profile_seaweedfs::manage_sd_service,
 ) {
-  class { 'seaweedfs::master':
-    replication => $master_replication,
-    ipaddress   => $master_ip,
-    port        => $master_port,
-    peers       => $master_peers,
+  seaweedfs::master { $title:
+    replication       => $master_replication,
+    ipaddress         => $ip_address,
+    port              => $master_port,
+    peers             => $master_peers,
+    volume_size_limit => $volume_size_limit,
   }
 
   firewall { "0${master_port} allow seaweedfs master http":
@@ -25,10 +27,10 @@ class profile_seaweedfs::master (
   }
 
   if $manage_sd_service {
-    consul::service { 'seaweedfs-master':
+    consul::service { "seaweedfs-master-${title}":
       checks => [
         {
-          http     => "http://${master_ip}:${master_port}/cluster/status?pretty=y",
+          http     => "http://${ip_address}:${master_port}/cluster/status?pretty=y",
           interval => '10s'
         }
       ],

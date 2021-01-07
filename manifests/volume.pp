@@ -1,12 +1,12 @@
 #
-class profile_seaweedfs::volume (
+define profile_seaweedfs::volume (
   String  $ip_address         = $::profile_seaweedfs::ip_address,
-  String  $volume_data_dir    = $::profile_seaweedfs::volume_data_dir,
-  Integer $volume_max_volumes = $::profile_seaweedfs::volume_max_volumes,
-  Integer $volume_port        = $::profile_seaweedfs::volume_port,
+  String  $volume_data_dir    = '/srv/seaweedfs',
+  Integer $volume_max_volumes = 7,
+  Integer $volume_port        = 8080,
   Boolean $manage_sd_service  = $::profile_seaweedfs::manage_sd_service,
 ) {
-  class { 'seaweedfs::volume':
+  seaweedfs::volume { $title:
     data_dir    => $volume_data_dir,
     max_volumes => $volume_max_volumes,
     port        => $volume_port,

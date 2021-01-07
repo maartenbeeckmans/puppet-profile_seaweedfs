@@ -1,46 +1,46 @@
 #
 class profile_seaweedfs (
-  String  $ip_address,
-  Boolean $filer,
-  String  $filer_ip,
-  Boolean $master,
-  String  $master_ip,
-  Boolean $volume,
   String  $archive_name,
+  String  $version,
+  String  $ip_address,
+  String  $filer_ip,
   Integer $filer_port,
-  String  $filer_replication,
+  String  $master_ip,
   Integer $master_port,
-  String  $master_replication,
-  Array   $master_peers,
+  Boolean $manage_sd_service,
+  Boolean $master,
+  Hash    $masters,
+  Hash    $master_defaults,
+  Boolean $filer,
+  Hash    $filers,
+  Hash    $filer_defaults,
+  Boolean $volume,
+  Hash    $volumes,
+  Hash    $volume_defaults,
   Boolean $mount,
   Hash    $mounts,
   Hash    $mount_defaults,
-  String  $version,
-  String  $volume_data_dir,
-  Integer $volume_max_volumes,
-  Integer $volume_port,
-  Boolean $manage_sd_service,
 ) {
   class { 'seaweedfs':
     archive_name => $archive_name,
+    version      => $version,
+    ipaddress    => $ip_address,
     filer_ip     => $filer_ip,
     filer_port   => $filer_port,
-    ipaddress    => $ip_address,
     master_ip    => $master_ip,
     master_port  => $master_port,
-    version      => $version,
   }
 
   if $master {
-    include profile_seaweedfs::master
+    create_resources('profile_seaweedfs::master', $masters, $master_defaults)
   }
 
   if $filer {
-    include profile_seaweedfs::filer
+    create_resources('profile_seaweedfs::filer', $filers, $filer_defaults)
   }
 
   if $volume {
-    include profile_seaweedfs::volume
+    create_resources('profile_seaweedfs::volume', $volumes, $volume_defaults)
   }
 
   if $mount {
